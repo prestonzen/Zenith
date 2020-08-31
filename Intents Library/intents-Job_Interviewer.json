@@ -26,6 +26,18 @@
 		"context_set": ""
 		},
 		
+		{"tag": "self-description",
+		"patterns": ["Name"],
+		"responses": ["Tell me a bit about yourself."],
+		"context_set": ""
+		},
+		
+		{"tag": "transitions",
+		"patterns": ["Good", "skilled", "listener"],
+		"responses": ["What do you think your best personality traints are?"],
+		"context_set": ""
+		},
+		
 		{"tag": "thanks",
 		"patterns": [
 			"Thanks", 

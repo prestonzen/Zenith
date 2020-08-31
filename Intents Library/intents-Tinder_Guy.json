@@ -26,6 +26,12 @@
 		"context_set": ""
 		},
 		
+		{"tag": "sex-suggestion",
+		"patterns": ["I'm bored", "I can't sleep", "wyd?"],
+		"responses": ["Let's hangout", "Let's do something tonight"],
+		"context_set": ["LMAO","bored"]
+		},
+		
 		{"tag": "thanks",
 		"patterns": [
 			"Thanks", 
@@ -77,9 +83,9 @@
 		},
 		
 		{"tag": "age-statement",
-		"patterns": ["years old", "19", "I'm 19"],
-		"responses": ["I'm 19 years old too!", "I'm 19 as well", "I've also been on this earth for 19 years of human time"],
-		"context_set": ""
+		"patterns": ["How old are you?", "Old"],
+		"responses": ["I'm 23", "I'm basically 5"],
+		"context_set": "old"
 		},
 
 		{"tag": "age-question",
