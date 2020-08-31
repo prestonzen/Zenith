@@ -1,7 +1,21 @@
 {"intents": [
 		{"tag": "greeting",
-		"patterns": ["Hi", "Hi my name is", "How are you?", "Is anyone there?", "Hello", "What's up?", "Hi how are you doing today?"],
-		"responses": ["Hello, How are you?"],
+		"patterns": [
+			"Hi", 
+			"Hi my name is", 
+			"Hi",
+			"Hey",
+			"Hello",
+			"How are you?", 
+			"Is anyone there?", 
+			"Hello", 
+			"What's up?", 
+			"Hi how are you doing today?"
+		],
+		"responses": [
+			"Hello", 
+			"How are you?"
+		],
 		"context_set": ""
 		},
 		
@@ -11,6 +25,20 @@
 		"context_set": ""
 		},
 		
+		{"tag": "thanks",
+		"patterns": [
+			"Thanks", 
+			"Thank you", 
+			"That's helpful", 
+			"Thank's a lot!"
+		],
+		"responses": [
+			"Happy to help!",
+			"Any time!",
+			"My pleasure"
+			]
+		},
+	
 		{"tag": "arrival",
 		"patterns": ["Arrived from where?", "Where from?", "From where?"],
 		"responses": ["The airport. I didn't catch your name."],
@@ -57,7 +85,7 @@
 		{"tag": "resume-response",
 		"patterns": ["No I haven't", "No", "Yes", "Yes I have"],
 		"responses": ["Great! What topics if any would you like me to elaborate on?"],
-		"context_set": ""
+		"context_set": "resume"
 		},
 		
 		{"tag": "conversational stalls",
