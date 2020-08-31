@@ -50,4 +50,4 @@ while True:
             if tag == intent["tag"]:
                 print(f"{bot_name}: {random.choice(intent['responses'])}")
     else:
-        print(f"{bot_name}: And the answer to the universe is 42")
+        print(f"{bot_name}: I see. Tell me more.")

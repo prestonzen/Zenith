@@ -1,22 +1,7 @@
 {"intents": [
 		{"tag": "greeting",
-		"patterns": [
-			"Hi", 
-			"Hi",
-			"Hey",
-			"Hello",
-			"How are you?", 
-			"Is anyone there?", 
-			"Hello", 
-			"What's up?", 
-			"Hi how are you doing today?"
-		],
-		"responses": [
-			"Hello", 
-			"How are you?",
-			"How are you doing?",
-			"How
-		],
+		"patterns": ["Hi","Hey","Hello","How are you?", "Is anyone there?", "Hello", "What's up?", "Hi how are you doing today?"],
+		"responses": ["Hello", "How are you?","How are you doing?","How"],
 		"context_set": ""
 		},
 		
@@ -39,17 +24,8 @@
 		},
 		
 		{"tag": "thanks",
-		"patterns": [
-			"Thanks", 
-			"Thank you", 
-			"That's helpful", 
-			"Thank's a lot!"
-		],
-		"responses": [
-			"Happy to help!",
-			"Any time!",
-			"My pleasure"
-			]
+		 "patterns": ["Thanks", "Thank you", "That's helpful", "Thank's a lot!"],
+		"responses": ["Happy to help!","Any time!","My pleasure"]
 		},
 	
 		{"tag": "arrival",
@@ -65,14 +41,14 @@
 		},
 		
 		{"tag": "transportation",
-		"patterns": ["How do you get around?", "Do you have a car?", "Do you have transportation?"],
-		"responses": ["Yes I do", "Yes", "I use uber."],
-		"context_set": ""
+		"patterns": ,["Where is work located?", "How far away is work?", "Where is the office"]
+		"responses": ["We're less than 30 minutes away from most areas in town. How do you get around?", "We're less than 30 minutes away from most areas in town. Do you have a car?", "We're less than 30 minutes away from most areas in town. Do you have transportation?"],
+		"context_set": "where"
 		},
 
 		{"tag": "smoker-question",
-		"patterns": ["Do you smoke?", "Smoke?", "Do you use cigarettes?", "Are you a smoker?"],
-		"responses": ["Yes"],
+		"patterns": ["Smoke"],
+		"responses": ["How long have you beeen smoking?", "Smoke?", "Do you use cigarettes?", "Are you a smoker?"],
 		"context_set": "Jill"
 		},
 		
@@ -81,6 +57,12 @@
 		"responses": ["My name is Joe", "My name is Jill", "They call me Joe", "They call me Jill", "I'm Joe", "I'm Jill"],
 		"context_set": ""
 		},
+		
+		{"tag": "redirection",
+		"patterns": ["What about you?"],
+		"responses": ["This is your interview not mine. If you're really curious we can discuss that afterwards."],
+		"context_set": ""
+		},		
 		
 		{"tag": "reciprocation",
 		"patterns": ["Great to meet you", "Pleasure to meet you", "Nice to meet you"],
@@ -125,17 +107,8 @@
 		},
 
 		{"tag": "dead-responses",
-		"patterns": 
-		[
-			"Alright", 
-			"Ok",
-			"Sure",
-			"Yes"
-		],
-		"responses": 
-		[
-			"Ok...Want to hear a joke?"
-		],
+		"patterns": ["Alright", "Ok","Sure","Yes"],
+		"responses": ["Ok...Want to hear a joke?"],
 		"context_set": ""
 		},
 		
