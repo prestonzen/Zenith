@@ -2,7 +2,6 @@
 		{"tag": "greeting",
 		"patterns": [
 			"Hi", 
-			"Hi my name is", 
 			"Hi",
 			"Hey",
 			"Hello",
@@ -14,7 +13,9 @@
 		],
 		"responses": [
 			"Hello", 
-			"How are you?"
+			"How are you?",
+			"How are you doing?",
+			"How
 		],
 		"context_set": ""
 		},
@@ -69,7 +70,6 @@
 		"context_set": ""
 		},
 
-
 		{"tag": "location-question",
 		"patterns": ["Why are you here?"],
 		"responses": ["I'm looking for new opportunities for work"],
@@ -94,7 +94,21 @@
 		"context_set": ""
 		},
 
-
+		{"tag": "dead-responses",
+		"patterns": 
+		[
+			"Alright", 
+			"Ok",
+			"Sure",
+			"Yes"
+		],
+		"responses": 
+		[
+			"Ok..."
+		],
+		"context_set": ""
+		},
+		
 		{"tag": "oneliner-jokes",
 		"patterns": ["Alright", "Ok", "Sure", "Yes"],
 		"responses": ["A blind man walks into a bar..."],
