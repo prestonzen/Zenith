@@ -15,7 +15,7 @@
 			"Hello", 
 			"How are you?",
 			"How are you doing?",
-			"How
+			"How"
 		],
 		"context_set": ""
 		},
@@ -26,7 +26,7 @@
 		"context_set": ""
 		},
 		
-		{"tag": "sex-suggestion",
+		{"tag": "hangout-suggestion",
 		"patterns": ["I'm bored", "I can't sleep", "wyd?"],
 		"responses": ["Let's hangout", "Let's do something tonight"],
 		"context_set": ["LMAO","bored"]

@@ -54,7 +54,7 @@
 		
 		{"tag": "name",
 		"patterns": ["My name is.", "What is your name?", "What name would you like to go by?", "what's your name?", "whats your name", "what do I call you?", "Name?"],
-		"responses": ["My name is Joe", "My name is Jill", "They call me Joe", "They call me Jill", "I'm Joe", "I'm Jill"],
+		"responses": ["My name is Alex"],
 		"context_set": ""
 		},
 		
@@ -119,20 +119,26 @@
 		},
 
 		{"tag": "elaborate-response",
-		"patterns": ["None", "It's actually quite straghtforward"],
-		"responses": ["In that case when do I start?"],
+		"patterns": ["Do you have any questions about it?", "Questions?"],
+		"responses": ["None", "It's actually quite straghtforward"],
 		"context_set": ""
 		},
 		
+		{"tag": "start-date",
+		"patterns": ["In that case when do I start?","Start date?"],
+		"responses": ["You start Tomorrow. Congragulations.", "You start next Monday. Congragulations.", "You start next Tuesday. Congragulations.", "You start next Wednesday. Congragulations.", "You start next Thursday. Congragulations.", "You start next Friday. Congragulations.", "You start next Saturday. Congragulations.", "You start next Sunday. Congragulations."],
+		"context_set": ["role","job"]
+		},
+		
 		{"tag": "start-response",
-		"patterns": ["Tomorrow", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-		"responses": ["Alright I'll see you then"],
-		"context_set": ""
+		"patterns": ["Thank you"],
+		"responses": ["Your welcome. I'll see you then"],
+		"context_set": "Congragulations"
 		},
 
 		{"tag": "goodbye",
 		"patterns": ["cya", "bye", "ttyl", "See you later", "Goodbye", "I'm heading out", "Have a good day", "Looking forward to seeing you back here"],
-		"responses": ["See you soon", "Goodbye!", "We'll talk soon"],
+		"responses": ["See you soon", "Goodbye", "We'll talk soon"],
 		"context_set": ""
 		}
 	]

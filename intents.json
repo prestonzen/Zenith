@@ -95,7 +95,7 @@
 		},
 
 		{"tag": "job",
-		"patterns": ["I hear you're looking for a job.", "In the job market I see", "Are you lookinig for a job?", "Are you looking for work?"],
+		"patterns": ["I hear you're looking for a job.", "In the job market I see", "Are you looking for a job?", "Are you looking for work?"],
 		"responses": ["Yes I am. Have you had a chance to look at my resume?"],
 		"context_set": ""
 		},
