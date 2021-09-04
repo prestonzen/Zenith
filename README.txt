@@ -1,10 +1,17 @@
 Zenith is a cybersecurity AI NLP chatbot that references the MITRE ATT&CK Framework. Zenith sources information from open-source intelligence platforms to relay situationally relevant intelligence and achieve cyber objectives through automated processes.
 
-#Usage
-install docker
-npm install botfront
+#Quickstart Usage
+##Windows
+install docker desktop
+install npm
+`npm install -g botfront`
 drag in the model
 replace botfront files
+
+##Linux
+`sudo apt-get install docker-ce`
+`sudo apt install nodejs npm`
+`npm install -g botfront`
 
 #Donate
 I haven't completely decided on a monetezation structure yet so to delay that my donation links are below:
