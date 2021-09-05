@@ -4,7 +4,8 @@ Zenith is a cybersecurity AI NLP chatbot that references the MITRE ATT&CK Framew
 ##Windows 
 install docker desktop
 install npm
-`cd C:\Users\NAME\Desktop\Zenith\botfront\cli && npm link' This binds botfront to the npm node-modules 
+`cd C:\Users\NAME\Desktop\Zenith\botfront\cli && npm link` This binds botfront to the npm node-modules 
+
 replace default botfront-db files with Zenith's
 `botfront up`
 Open a browser and navigate to localhost:8888
