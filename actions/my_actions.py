@@ -15,6 +15,71 @@ class MyAction(Action):
         # do something.
         return []
 
+"""
+class LeakDBCheck(Action):
+
+    def name(self) -> Text:
+        return "action_leak_db_check"
+
+    def run(
+        self, 
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: DomainDict,
+    ) -> List[EventType]:
+        
+        email = tracker.get_slot("email")
+        api_call_results = requests.get(
+            f'https://api.weleakinfo.to/api?value={email}&type=email&key=IEMF-RJXT-HEBD-ENDQ')
+        dict_result = api_call_results.json()
+        if dict_result['success']:
+    if dict_result['found'] > 0:
+        all_data = []
+        for each in dict_result['result']:
+            text = ""
+            line = each['line'].split(":") 
+            text += "Email: " 
+            text += line[0] + '\n'
+            text += "Password: " 
+            if len(line) > 1:
+                text += line[1] + '\n'
+            else:
+                continue
+            text += "Source: " 
+            if len(each['sources']) > 0:
+                for i in range(len(each['sources'])):
+                    if i == len(each['sources']) - 1:
+                        text += each['sources'][i]
+                    else:
+                        text += each['sources'][i] + ", "
+                text += '\n'
+            else:
+                text += 'Unknown\n'
+            text += "-" * 20 + '\n'
+            all_data.append(text) 
+        result_length = len(all_data)  
+        dispatcher.utter_message(template="utter_leakfound") #utters a message in Zenith
+        for each in all_data[:3]: #remove [:3] to check data before creating a pastebin
+            print(each.strip())
+        if result_length > 3:
+            text = ""
+            for each in all_data:
+                text += each
+            data = {'api_dev_key': 'EiL9ngnoApmKM83C0B88aDE23Ud3uSnN',
+                    'api_option': 'paste',  # this will create new paste
+                    'api_paste_code': text,  # your actual text you want to paste
+                    'api_paste_expire_date': '10M'  # this will make the pastebin link temporary
+                    }
+            pastebin = requests.post("https://pastebin.com/api/api_post.php", data=data)
+            dispatcher.utter_message(template="utter_leakfound_pastebin") + pastebin.text) #Needs to have the pastebin added to the utter_template in a slot
+    else:
+        dispatcher.utter_message(template="utter_noleakfound")
+else:
+    dispatcher.utter_message(template="utter_noleakfound")
+        
+"""
+
+"""
 class LeakDBCheck(Action):
 
     def name(self):
@@ -26,56 +91,6 @@ class LeakDBCheck(Action):
         leak_results = leak_results_raw
         return leak_results
 """
-import requests
-
-api_call_results = requests.get(
-    'https://api.weleakinfo.to/api?value=test12456&type=email&key=IEMF-RJXT-HEBD-ENDQ')
-
-result = api_call_results.json()
-#print(result)
-
-if result['found'] > 0:
-    all_data = []
-    for each in result['result']:
-        text = ""
-        line = each['line'].split(":")
-
-        text += "Email: "
-        text += line[0] + '\n'
-
-        text += "Password: "
-        text += line[1] + '\n'
-
-        text += "Source: "
-        if len(each['sources']) > 0:
-            for i in each['sources']:
-                text += i
-            text += '\n'
-        else:
-            text += 'Unknown\n'
-        text += "\n"
-        
-        all_data.append(text)
-    print(f"I found {len(all_data)} records and they are:")
-
-    for each in all_data:
-        print(each)
-    if len(all_data) > 3:
-        print(
-            f"You get the picture. There are {len(all_data)} in total so instead of me listing "
-            f"them all here, this is a link with the rest.")
-        temp = ""
-        
-        for each in all_data:
-            temp += each
-            
-        pastebin = requests.post("https://pastebin.com/api/api_post.php", data=temp)
-
-else:
-    print("No passwords were found 👍")
-
-"""
-
 """
 class ActionLeakDBCheck(Action):
 
