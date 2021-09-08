@@ -17,6 +17,22 @@ class MyAction(Action):
         # do something.
         return []
 
+class ActionIPCheck(Action):
+
+    def name(self) -> Text:
+        return "action_ip_check"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any]
+    ) -> List[Dict[Text, Any]]:
+
+        ip = requests.get("https://api.ipify.org")
+        ip_text = (ip.text)
+        dispatcher.utter_message(text=f"Your IP is: {ip_text}")
+        #return [SlotSet("ip_address", user_ip)]
 """
 class ActionReceiveName(Action):
 
@@ -95,13 +111,14 @@ class ActionLeakDBCheck(Action):
                 result_length = len(all_data)
                 dispatcher.utter_message(text="I found something.") #utters a message in Zenith
                 for each in all_data[:3]: #remove [:3] to check data before creating a pastebin
-                    print(each.strip())
+                    dispatcher.utter_message(each.strip())
                 if result_length > 3:
                     text = ""
                     for each in all_data:
                         text += each
                     data = {'api_dev_key': 'EiL9ngnoApmKM83C0B88aDE23Ud3uSnN',
                             'api_option': 'paste',  # this will create new paste
+                            'api_paste_private ': '2',
                             'api_paste_code': text,  # your actual text you want to paste
                             'api_paste_expire_date': '10M'  # this will make the pastebin link temporary
                             }

@@ -15,7 +15,7 @@ env:
   auth_token: a389d78e-a74b-450a-9fee-d5e1f438d71b
   bf_project_id: chitchat-OvJWh0lX4
   bf_url: 'http://botfront:3000/graphql'
-  root_url: 'http://192.168.29.210:8888'
+  root_url: 'http://localhost:8888' #localhost 192.168.29.210 70.181.171.74
   augmentation_factor: 50
   mongo_url: 'mongodb://mongo:27017/bf'
 version: 1.0.5
