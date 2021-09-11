@@ -1,45 +1,46 @@
-#Zenith V1.0 ☯ \
-Zenith is a cybersecurity AI NLP chatbot that references the MITRE ATT&CK Framework. Zenith sources information from open-source intelligence platforms to relay situationally relevant intelligence and achieve cyber objectives through automated processes. \
+#Zenith V1.0 ☯ </br>
+Zenith is a cybersecurity AI NLP chatbot that references the MITRE ATT&CK Framework. Zenith sources information from open-source intelligence platforms to relay situationally relevant intelligence and achieve cyber objectives through automated processes. </br>
 
-#Quickstart Usage ⚡ \
-##Windows \
-install docker desktop https://www.docker.com/products/docker-desktop \
-install node.js (NPM is included) \
-install latest NET framework (https://dotnet.microsoft.com/download/dotnet-framework)
-extract Zenith-master
-cd Zenith\ (Move into Zenith's directory where you can see .botfront)
-Open up powershell as an administrator
-Set-ExecutionPolicy RemoteSigned
-Change the Execution policy to allow remote signed scripts
-npm install -g npm 
-npm install -g botfront
-restart computer
-open up docker-desktop as an admin (You may need to log out of windows for docker-users to take affect)
-Move to a location where you want to make the project folder
-botfront init
-cd C:\Users\NAME\Desktop\Zenith\botfront\cli && npm link\
-This binds botfront to the npm node-modules \
-botfront up \
+#Quickstart Usage ⚡ </br>
+##Windows </br>
+install the linux sub-system </br>
+install node.js (NPM is included) https://nodejs.org/en/download/ </br>
+install latest NET framework (https://dotnet.microsoft.com/download/dotnet-framework) </br>
+install docker desktop https://www.docker.com/products/docker-desktop </br>
+extract Zenith-master </br>
+cd Zenith</br> (Move into Zenith's directory where you can see .botfront) </br>
+Open up powershell as an administrator </br>
+Set-ExecutionPolicy RemoteSigned </br>
+Change the Execution policy to allow remote signed scripts </br>
+npm install -g npm </br>
+npm install -g botfront </br>
+restart computer & Boot up to BIOS and confirm/enable SVM virtualization settings </br>
+install the wsl kernel https://docs.microsoft.com/en-us/windows/wsl/install-win10#step-4---download-the-linux-kernel-update-package </br>
+Confirm that WSL for Docker is installed correctly </br>
+open up docker-desktop as an admin (You may need to log out of windows for docker-users to take affect) </br>
+Move to a location where you want to make the project folder </br>
+botfront init </br>
+create a new project folder per the prompt
+cd C:</br>Users</br>NAME</br>Desktop</br>Zenith</br>botfront</br>cli && npm link</br>
+This binds botfront to the npm node-modules </br>
+botfront up </br>
 Docker containers will download then start botfront
-Open a browser and navigate to localhost:8888 \
+Open a browser and navigate to localhost:8888 </br>
 
-##Linux 🐧 \
-```text
-sudo apt-get install docker-ce```\
-```text
-sudo apt install nodejs npm```\
-```text
-npm install -g botfront```\
+##Linux 🐧 </br>
+sudo apt-get install docker-ce```</br>
+sudo apt install nodejs npm```</br>
+sudo npm install -g botfront```</br>
 
-##Mac 🍎 \
-Currently Untested \
+##Mac 🍎 </br>
+Currently Untested </br>
 
-#Donate 💸 \
-I haven't completely decided on a monetezation structure yet so to delay that my donation links are below: \
-BTC: bc1qlnvj4r90ga5ntw0j7mvjtdt2uwa8hcyz5flvny \
-ETH: 0x0aDDf7b7915bbe5B8da1777565e20C6972dD9927 \
-LTC: ltc1qq9aqyy8wyjqnyh2y6ygn7curqxvu226cvmhp9c \
-XMR: 46HekyoxQACdipGjGPTDVE6Doppe7iYSrTMHoNLzrnXuHuP9feFS8DxckWtH9MjjjqGvSeVAFq9QxM6n3wMqVWXzJJLy4EU \
-Paypal: https://paypal.me/prestonzen \
-Venmo: @prestonzen \
-Cashapp: $prestonzen \
+#Donate 💸 </br>
+I haven't completely decided on a monetization structure yet so to delay that my donation links are below: </br>
+BTC: bc1qlnvj4r90ga5ntw0j7mvjtdt2uwa8hcyz5flvny </br>
+ETH: 0x0aDDf7b7915bbe5B8da1777565e20C6972dD9927 </br>
+LTC: ltc1qq9aqyy8wyjqnyh2y6ygn7curqxvu226cvmhp9c </br>
+XMR: 46HekyoxQACdipGjGPTDVE6Doppe7iYSrTMHoNLzrnXuHuP9feFS8DxckWtH9MjjjqGvSeVAFq9QxM6n3wMqVWXzJJLy4EU </br>
+Paypal: https://paypal.me/prestonzen </br>
+Venmo: @prestonzen </br>
+Cashapp: $prestonzen </br>
