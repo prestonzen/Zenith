@@ -12,9 +12,9 @@ images:
     mongo: 'mongo:latest'
     actions: 'rasa/rasa-sdk:2.1.2'
 env:
-  bf_project_id: wt9tb96iCuLBpLycT
+  bf_project_id: chitchat-OvJWh0lX4
   bf_url: 'http://botfront:3000/graphql'
-  root_url: 'http://70.181.171.74:8888' #70.181.171.74
+  root_url: 'http://70.181.171.74:8888'
   augmentation_factor: 50
   mongo_url: 'mongodb://mongo:27017/bf'
 version: 1.0.5

@@ -1,0 +1,3 @@
+Question: I'm getting the error of: Cannot train model: string indices must be integers
+
+Answer: You need to disable Gazette

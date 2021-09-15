@@ -17,6 +17,22 @@ class MyAction(Action):
         # do something.
         return []
 
+class ActionShodanCheck(Action):
+
+    def name(self) -> Text:
+        return "action_shodan_check"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any]
+    ) -> List[Dict[Text, Any]]:
+
+        ip_address = tracker.latest_message['ip address']
+        dispatcher.utter_message(text=f"Here's a Shodan search link: https://www.shodan.io/search?query={ip_address}")
+
+"""
 class ActionIPCheck(Action):
 
     def name(self) -> Text:
@@ -33,6 +49,8 @@ class ActionIPCheck(Action):
         ip_text = (ip.text)
         dispatcher.utter_message(text=f"Your IP is: {ip_text}")
         #return [SlotSet("ip_address", user_ip)]
+"""
+
 """
 class ActionReceiveName(Action):
 
