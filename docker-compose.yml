@@ -36,8 +36,6 @@ services:
       - './models/:/app/models'
     env_file:
       - .env
-    environment:
-      - BF_PROJECT_ID=chitchat-OvJWh0lX4
   actions:
     build:
       context: ./actions
@@ -58,8 +56,6 @@ services:
       - actions
     env_file:
       - .env
-    environment:
-      - BF_PROJECT_ID=chitchat-OvJWh0lX4
   duckling:
     image: 'botfront/duckling:latest'
     container_name: botfront-duckling
