@@ -25,7 +25,7 @@ class ActionMyAction(Action):
         return []
 """
 
-class ActionTellTime(Action):
+class ActionTellTime(Action): #WORKS
 
     def name(self) -> Text:
         return "action_tell_time"
@@ -35,7 +35,41 @@ class ActionTellTime(Action):
             dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
         dispatcher.utter_message(text=f"The current date and time is {dt.datetime.now()}")
+
+        return []
+
+class ActionSetEmail(Action):
+
+    def name(self) -> Text:
+        return "action_set_email"
+
+    def run(
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        email = tracker.latest_message['email']
+        dispatcher.utter_message(text=f"Confirming the email I have is: {email}")
+
+        return [SlotSet("email", email)] #Correct. First section is Slot. Second is Python Variable
+
+class ActionUtterEmail(Action):
+
+    def name(self) -> Text:
+        return "action_utter_email"
+
+    def run(
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        email = tracker.get_slot('email')
+        dispatcher.utter_message(text=f"The email I have for you is: {email}")
+
         return []
 
 class ActionSetIPAddress(Action):
@@ -44,82 +78,15 @@ class ActionSetIPAddress(Action):
         return "action_set_ip_address"
 
     def run(
-        self,
-        dispatcher: CollectingDispatcher,
-        tracker: Tracker,
-        domain: Dict[Text, Any]
-        ) -> List[Dict[Text, Any]]:
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
         ip_address = tracker.latest_message['ip_address']#Collect IP Address
         dispatcher.utter_message(text=f"I've saved the IP Address: {ip_address}") #utter to confirm
+
         return [SlotSet('ip_address', ip_address)] #First is the Slot, Second is the Python Variable
-
-"""
-class ActionShodanCheck(Action):
-
-    def name(self) -> Text:
-        return "action_shodan_check"
-
-    def run(
-        self,
-        dispatcher: CollectingDispatcher,
-        tracker: Tracker,
-        domain: Dict[Text, Any]
-    ) -> List[Dict[Text, Any]]:
-
-        ip_address = tracker.latest_message['ip_address']
-        dispatcher.utter_message(text=f"Here's a Shodan search link: https://www.shodan.io/search?query={ip_address}")
-"""
-
-"""
-class ActionIPCheck(Action): #Works Syntactically but not via intent
-
-    def name(self) -> Text:
-        return "action_ip_check"
-
-    def run(
-        self,
-        dispatcher: CollectingDispatcher,
-        tracker: Tracker,
-        domain: Dict[Text, Any]
-    ) -> List[Dict[Text, Any]]:
-
-        ip = requests.get("https://api.ipify.org")
-        ip_text = (ip.text)
-        dispatcher.utter_message(text=f"Your IP is: {ip_text}")
-        #return [SlotSet("ip_address", user_ip)]
-"""
-
-"""class ActionReceiveName(Action):
-
-    def name(self) -> Text:
-        return "action_receive_name"
-
-    def run(
-        self,
-        dispatcher: CollectingDispatcher,
-        tracker: Tracker,
-        domain: Dict[Text, Any]
-    ) -> List[Dict[Text, Any]]:
-
-        text = tracker.latest_message['text']
-        dispatcher.utter_message(text=f"I'll remember your name {text}.")
-        return [SlotSet("name", text)]"""
-
-class ActionSetEmail(Action):
-
-    def name(self) -> Text:
-        return "action_set_email"
-
-    def run(
-        self,
-        dispatcher: CollectingDispatcher,
-        tracker: Tracker,
-        domain: Dict[Text, Any]
-    ) -> List[Dict[Text, Any]]:
-
-        email = tracker.latest_message['email']
-        dispatcher.utter_message(text=f"Confirming the email I have is: {email}")
-        return [SlotSet("email", email)] #Correct. First section is Slot. Second is Python Variable
 
 class ActionLeakDBCheck(Action):
 
@@ -127,11 +94,10 @@ class ActionLeakDBCheck(Action):
         return "action_leak_db_check"
 
     def run(
-        self,
-        dispatcher: CollectingDispatcher,
-        tracker: Tracker,
-        domain: Dict[Text, Any]
-    ) -> List[Dict[Text, Any]]:
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         email = tracker.get_slot('email')
         #email = tracker.latest_message["email"]
@@ -139,7 +105,7 @@ class ActionLeakDBCheck(Action):
             dispatcher.utter_message(text="I don't have an email to check.")
         else:
             api_call_results = requests.get(
-                f'https://api.weleakinfo.to/api?value={email}&type=email&key=1234-1234-1234-1234')
+                f'https://api.weleakinfo.to/api?value={email}&type=email&key=')
             dict_result = api_call_results.json()
             if dict_result['success']:
                 if dict_result['found'] > 0:
@@ -186,4 +152,56 @@ class ActionLeakDBCheck(Action):
                     dispatcher.utter_message(text="I didn't find anything useful.")
             else:
                 dispatcher.utter_message(text="I didn't find anything useful.")
+
         return []
+
+class ActionShodanCheck(Action):
+
+    def name(self) -> Text:
+        return "action_shodan_check"
+
+    def run(
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+    
+        ip_address = tracker.get_slot('ip_address')
+        dispatcher.utter_message(text=f"Here's a Shodan search link: https://www.shodan.io/search?query={ip_address}")
+
+
+"""
+class ActionIPCheck(Action): #Works Syntactically but not via intent
+
+    def name(self) -> Text:
+        return "action_ip_check"
+
+    def run(
+        self,
+        dispatcher: CollectingDispatcher,
+        tracker: Tracker,
+        domain: Dict[Text, Any]
+    ) -> List[Dict[Text, Any]]:
+
+        ip = requests.get("https://api.ipify.org")
+        ip_text = (ip.text)
+        dispatcher.utter_message(text=f"Your IP is: {ip_text}")
+        #return [SlotSet("ip_address", user_ip)]
+"""
+
+"""
+class ActionSetName(Action):
+
+    def name(self) -> Text:
+        return "action_set_name"
+
+    def run(
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        text = tracker.latest_message['text']
+        dispatcher.utter_message(text=f"I'll remember your name {text}.")
+        return [SlotSet("name", text)]
+"""
