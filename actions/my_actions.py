@@ -51,10 +51,16 @@ class ActionSetEmail(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        email = tracker.latest_message['email']
-        dispatcher.utter_message(text=f"Confirming the email I have is: {email}")
+        email = tracker.latest_message['text']
+        #email = tracker.latest_message['entities']
+        #email = next(tracker.get_latest_entity_values(“Email”), None)
 
-        return [SlotSet("email", email)] #Correct. First section is Slot. Second is Python Variable
+        if not email:
+            dispatcher.utter_message(text="I don't have an email saved.")
+        else:
+            #ip_address = Filter ip_address input for code injection
+            dispatcher.utter_message(text=f"Alright I've got the email: {email}")
+        return [SlotSet("slot_email", email)] #Correct. First section is Slot. Second is Python Variable
 
 class ActionUtterEmail(Action):
 
@@ -68,25 +74,13 @@ class ActionUtterEmail(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         email = tracker.get_slot('email')
-        dispatcher.utter_message(text=f"The email I have for you is: {email}")
-
+        if not email:
+            dispatcher.utter_message(text="I don't have an email saved.")
+        else:
+            #ip_address = Filter ip_address input for code injection
+            dispatcher.utter_message(text=f"The email I have for you is: {email}")
+            #dispatcher.utter_message("This is another way to output text with multi variables. Variable 1 is {} and Variable 2 is {}".format)variable1, variable2))
         return []
-
-class ActionSetIPAddress(Action):
-
-    def name(self) -> Text:
-        return "action_set_ip_address"
-
-    def run(
-            self,
-            dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-        ip_address = tracker.latest_message['ip_address']#Collect IP Address
-        dispatcher.utter_message(text=f"I've saved the IP Address: {ip_address}") #utter to confirm
-
-        return [SlotSet('ip_address', ip_address)] #First is the Slot, Second is the Python Variable
 
 class ActionLeakDBCheck(Action):
 
@@ -99,7 +93,7 @@ class ActionLeakDBCheck(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        email = tracker.get_slot('email')
+        email = tracker.get_slot("slot_email")
         #email = tracker.latest_message["email"]
         if not email:
             dispatcher.utter_message(text="I don't have an email to check.")
@@ -155,6 +149,23 @@ class ActionLeakDBCheck(Action):
 
         return []
 
+class ActionSetIP(Action):
+
+    def name(self) -> Text:
+        return "action_set_ip"
+
+    def run(
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        ip_address = tracker.latest_message['text']#Collect IP Address
+        #ip_address = next(tracker.get_latest_entity_values(“IP_Address”), None)
+        dispatcher.utter_message(text=f"I've saved the IP Address: {ip_address}") #utter to confirm
+
+        return [SlotSet("slot_ip_address", ip_address)] #First is the Slot, Second is the Python Variable
+
 class ActionShodanCheck(Action):
 
     def name(self) -> Text:
@@ -166,9 +177,34 @@ class ActionShodanCheck(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
     
-        ip_address = tracker.get_slot('ip_address')
-        dispatcher.utter_message(text=f"Here's a Shodan search link: https://www.shodan.io/search?query={ip_address}")
+        ip_address = tracker.get_slot("slot_ip_address")
+        if not ip_address:
+            dispatcher.utter_message(text="I don't have an IP Address to check.")
+        else:
+            #ip_address = Filter ip_address input for code injection
+            dispatcher.utter_message(text=f"Here's a Shodan search link for that IP Address: https://www.shodan.io/search?query={ip_address}")
+        return []
 
+"""
+
+class ActionPersonSearch(Action):
+
+    def name(self) -> Text:
+        return "action_person_search"
+
+    def run(
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+    
+        name = tracker.get_slot('name')
+        #name = Filter ip_address input for code injection
+        #name = name.replace(" ", "+")
+        dispatcher.utter_message(text=f"Here's a person search link: https://whitepages.com/search?query={name}")
+
+
+"""
 
 """
 class ActionIPCheck(Action): #Works Syntactically but not via intent
@@ -187,6 +223,24 @@ class ActionIPCheck(Action): #Works Syntactically but not via intent
         ip_text = (ip.text)
         dispatcher.utter_message(text=f"Your IP is: {ip_text}")
         #return [SlotSet("ip_address", user_ip)]
+"""
+
+"""
+class ActionVirustotalCheck(Action):
+
+    def name(self) -> Text:
+        return "action_virustotal_check"
+
+    def run(
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+    
+        ip_address = tracker.get_slot('ip_address')
+        #ip_address = Filter ip_address input for code injection
+        dispatcher.utter_message(text=f"Here's what I found for that IP address: Virus Total Results from X# of Vendors")
+        return []
 """
 
 """

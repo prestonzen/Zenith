@@ -1,14 +1,14 @@
 <H1 align="center">
-    Zenith V1.0 ☯
+    Zénith V1.0 ☯
 </H1>
 
-Zenith is a cybersecurity AI NLP chatbot that references the MITRE ATT&CK Framework. Zenith sources information from open-source intelligence platforms to relay situationally relevant intelligence and achieve cyber objectives through automated processes. </br>
+Zénith is a cybersecurity AI NLP chatbot that references the MITRE ATT&CK Framework. Zénith sources information from open-source intelligence platforms to relay situationally relevant intelligence and achieve cyber objectives through automated processes. </br>
 
 <H2 align="center">
 	Disclaimer ‼
 </H1>
 
-Zenith is for educational & simulation purposes only. I am not responsible for any illicit activities performed as a result of utilizing Zenith's capabilities.
+Zénith is for educational & simulation purposes only. I am not responsible for any illicit activities performed as a result of utilizing Zénith's capabilities. </br>
 
 <H1 align="center">
     Quickstart Usage ⚡
@@ -22,8 +22,8 @@ install the linux sub-system </br>
 install node.js (NPM is included) https://nodejs.org/en/download/ </br>
 install latest NET framework (https://dotnet.microsoft.com/download/dotnet-framework) </br>
 install docker desktop https://www.docker.com/products/docker-desktop </br>
-extract Zenith-master </br>
-```cd Zenith-master```</br> (Move into Zenith's directory where you can see .botfront) </br>
+extract Zénith-master </br>
+```cd Zénith-master```</br> (Move into Zénith's directory where you can see .botfront) </br>
 Open up powershell as an administrator </br>
 Change the Execution policy to allow remote signed scripts: ```Set-ExecutionPolicy RemoteSigned``` </br>
 ```npm install -g npm``` </br>
@@ -35,7 +35,7 @@ open up docker-desktop as an admin (You may need to log out of windows for docke
 Move to a location where you want to make the project folder </br>
 ```botfront init``` </br>
 Create a new project folder per the prompt
-cd C:</br>Users</br>NAME</br>Desktop</br>Zenith</br>botfront</br>cli && npm link</br>
+cd C:</br>Users</br>NAME</br>Desktop</br>Zénith</br>botfront</br>cli && npm link</br>
 This binds botfront to the npm node-modules </br>
 ```botfront up``` </br>
 Docker containers will download then start botfront
@@ -48,6 +48,10 @@ Open a browser and navigate to localhost:8888 </br>
 
 ##Mac 🍎 </br>
 Currently Untested </br>
+
+##Planned Features </br>
+Social Engineering Module Expansion for Computer Vision Micro Expression Analysis: https://github.com/JostineHo/mememoji </br>
+Voice Functionality to Talk to and receive voice responses from Zénith using Rasa's voice module: https://github.com/RasaHQ/rasa-voice-interface | https://www.youtube.com/watch?v=vX7IkUHU8m4&list=PLtFHvora00y-LU27sZGzzpHSNSpR1pUCW </br>
 
 #Donate 💸 </br>
 I haven't completely decided on a monetization structure yet so to delay that my donation links are below: </br>
