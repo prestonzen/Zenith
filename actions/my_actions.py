@@ -25,10 +25,12 @@ class ActionMyAction(Action):
         return []
 """
 
-class ActionTellTime(Action): #WORKS
+### Sets ###
+
+class ActionSetIP(Action):
 
     def name(self) -> Text:
-        return "action_tell_time"
+        return "action_set_ip"
 
     def run(
             self,
@@ -36,9 +38,11 @@ class ActionTellTime(Action): #WORKS
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        dispatcher.utter_message(text=f"The current date and time is {dt.datetime.now()}")
+        ip_address = tracker.latest_message['text']#Collect IP Address
+        #ip_address = next(tracker.get_latest_entity_values(“IP_Address”), None)
+        dispatcher.utter_message(text=f"I've saved the IP Address: {ip_address}") #utter to confirm
 
-        return []
+        return [SlotSet("slot_ip_address", ip_address)] #First is the Slot, Second is the Python Variable
 
 class ActionSetEmail(Action):
 
@@ -59,13 +63,14 @@ class ActionSetEmail(Action):
             dispatcher.utter_message(text="I don't have an email saved.")
         else:
             #ip_address = Filter ip_address input for code injection
+            #As long as I don't bind mount local files into docker then code injection is relatively isolated
             dispatcher.utter_message(text=f"Alright I've got the email: {email}")
         return [SlotSet("slot_email", email)] #Correct. First section is Slot. Second is Python Variable
 
-class ActionUtterEmail(Action):
+class ActionSetDomain(Action):
 
     def name(self) -> Text:
-        return "action_utter_email"
+        return "action_set_domain"
 
     def run(
             self,
@@ -73,14 +78,69 @@ class ActionUtterEmail(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
-        email = tracker.get_slot('email')
-        if not email:
-            dispatcher.utter_message(text="I don't have an email saved.")
-        else:
-            #ip_address = Filter ip_address input for code injection
-            dispatcher.utter_message(text=f"The email I have for you is: {email}")
-            #dispatcher.utter_message("This is another way to output text with multi variables. Variable 1 is {} and Variable 2 is {}".format)variable1, variable2))
+        domain = tracker.latest_message['text']#Collect data from user input
+        dispatcher.utter_message(text=f"I've saved the domain: {domain}") #utter to confirm
+
+        return [SlotSet("slot_domain", domain)] #First is the Slot, Second is the Python Variable
+
+class ActionSetUsername(Action):
+
+    def name(self) -> Text:
+        return "action_set_username"
+
+    def run(
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        username = tracker.latest_message['text']
+        dispatcher.utter_message(text=f"I'll remember the username {username}.")
+        return [SlotSet("slot_username", username)]
+
+### General ###
+
+class ActionTellTime(Action): #WORKS
+
+    def name(self) -> Text:
+        return "action_tell_time"
+
+    def run(
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        dispatcher.utter_message(text=f"The current date and time is {dt.datetime.now()}")
+
         return []
+
+class ActionTellJoke(Action): #WORKS
+
+    def name(self) -> Text:
+        return "action_tell_joke"
+
+    def run(
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        url = "https://jokes10.p.rapidapi.com/random"
+        headers = {
+            'x-rapidapi-host': "jokes10.p.rapidapi.com",
+            'x-rapidapi-key': "444714b3acmshc3f91a1cc67f9f9p15e367jsnf6256ecd9db3"
+        }
+
+        jokeResponse = requests.request("GET", url, headers=headers)
+
+        #print(jokeResponse.text)
+        #clean jokeResponse
+        dispatcher.utter_message(jokeResponse.text)
+
+        return []
+
+### Checks ###
 
 class ActionLeakDBCheck(Action):
 
@@ -134,7 +194,7 @@ class ActionLeakDBCheck(Action):
                         text = ""
                         for each in all_data:
                             text += each
-                        data = {'api_dev_key': 'EiL9ngnoApmKM83C0B88aDE23Ud3uSnN',
+                        data = {'api_dev_key': '',
                                 'api_option': 'paste',  # this will create new paste
                                 'api_paste_private ': '2',
                                 'api_paste_code': text,  # your actual text you want to paste
@@ -148,23 +208,6 @@ class ActionLeakDBCheck(Action):
                 dispatcher.utter_message(text="I didn't find anything useful.")
 
         return []
-
-class ActionSetIP(Action):
-
-    def name(self) -> Text:
-        return "action_set_ip"
-
-    def run(
-            self,
-            dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-        ip_address = tracker.latest_message['text']#Collect IP Address
-        #ip_address = next(tracker.get_latest_entity_values(“IP_Address”), None)
-        dispatcher.utter_message(text=f"I've saved the IP Address: {ip_address}") #utter to confirm
-
-        return [SlotSet("slot_ip_address", ip_address)] #First is the Slot, Second is the Python Variable
 
 class ActionShodanCheck(Action):
 
@@ -185,25 +228,69 @@ class ActionShodanCheck(Action):
             dispatcher.utter_message(text=f"Here's a Shodan search link for that IP Address: https://www.shodan.io/search?query={ip_address}")
         return []
 
-"""
-
-class ActionPersonSearch(Action):
+class ActionUsernameCheck(Action):
 
     def name(self) -> Text:
-        return "action_person_search"
+        return "action_username_check"
 
     def run(
             self,
             dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-    
-        name = tracker.get_slot('name')
+
+        uname = tracker.get_slot('slot_username')
         #name = Filter ip_address input for code injection
         #name = name.replace(" ", "+")
-        dispatcher.utter_message(text=f"Here's a person search link: https://whitepages.com/search?query={name}")
+        dispatcher.utter_message(text="Here's are some username search links.")
+        dispatcher.utter_message(text="You'll need to type that username into this site: https://checkusernames.com")
+        dispatcher.utter_message(text=f"https://knowem.com/checkusernames.php?u={uname}")
+        dispatcher.utter_message(text="You'll need to manually type into this one as well: https://namechk.com/")
+
+        return []
 
 
+"""
+class ActionWordpressVulns
+
+    def name(self) -> Text:
+        return "action_wordpress_vulns"
+
+    def run(
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        #url = tracker.get_slot('slot_domain')
+        #requests.get(url)
+        #if reply = 200:
+            #dispatcher.utter_message(text=f"{url} is open to wp-content/uploads access.")
+            #dispatcher.utter_message(text=f"Here's the link to access their site files: {url}/wp-content/uploads.")
+        #else:
+            #dispatcher.utter_message(text=f"{url} isn't open to wp-content/uploads access.")
+"""
+
+"""
+class ActionUtterEmail(Action):
+
+    def name(self) -> Text:
+        return "action_utter_email"
+
+    def run(
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        email = tracker.get_slot('email')
+        if not email:
+            dispatcher.utter_message(text="I don't have an email saved.")
+        else:
+            #ip_address = Filter ip_address input for code injection
+            dispatcher.utter_message(text=f"The email I have for you is: {email}")
+            #dispatcher.utter_message("This is another way to output text with multi variables. Variable 1 is {} and Variable 2 is {}".format)variable1, variable2))
+        return []
 """
 
 """
@@ -223,6 +310,8 @@ class ActionIPCheck(Action): #Works Syntactically but not via intent
         ip_text = (ip.text)
         dispatcher.utter_message(text=f"Your IP is: {ip_text}")
         #return [SlotSet("ip_address", user_ip)]
+
+
 """
 
 """
@@ -236,26 +325,10 @@ class ActionVirustotalCheck(Action):
             dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-    
+
         ip_address = tracker.get_slot('ip_address')
         #ip_address = Filter ip_address input for code injection
         dispatcher.utter_message(text=f"Here's what I found for that IP address: Virus Total Results from X# of Vendors")
         return []
-"""
 
-"""
-class ActionSetName(Action):
-
-    def name(self) -> Text:
-        return "action_set_name"
-
-    def run(
-            self,
-            dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
-        text = tracker.latest_message['text']
-        dispatcher.utter_message(text=f"I'll remember your name {text}.")
-        return [SlotSet("name", text)]
 """
