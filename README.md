@@ -49,6 +49,15 @@ Open a browser and navigate to localhost:8888 </br>
 ##Mac 🍎 </br>
 Currently Untested </br>
 
+##Actions Enviornment Prep </br>
+
+Create an andaconda enviornment with: </br>
+requests
+SpeechRecognition
+PyAudio
+pandas
+beautifulsoup4
+
 ##Planned Features </br>
 Social Engineering Module Expansion for Computer Vision Micro Expression Analysis: https://github.com/JostineHo/mememoji </br>
 Voice Functionality to Talk to and receive voice responses from Zénith using Rasa's voice module: https://github.com/RasaHQ/rasa-voice-interface | https://www.youtube.com/watch?v=vX7IkUHU8m4&list=PLtFHvora00y-LU27sZGzzpHSNSpR1pUCW </br>

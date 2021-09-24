@@ -9,6 +9,12 @@ from rasa_sdk import Action, Tracker
 from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
 
+##For Upcoming Voice Support Feature
+#import speech_recognition as sr
+#import subprocess
+#from gtts import gTTS
+#from translate import Translator
+
 """
 class ActionMyAction(Action):
 
@@ -129,7 +135,7 @@ class ActionTellJoke(Action): #WORKS
         url = "https://jokes10.p.rapidapi.com/random"
         headers = {
             'x-rapidapi-host': "jokes10.p.rapidapi.com",
-            'x-rapidapi-key': "444714b3acmshc3f91a1cc67f9f9p15e367jsnf6256ecd9db3"
+            'x-rapidapi-key': ""
         }
 
         jokeResponse = requests.request("GET", url, headers=headers)
