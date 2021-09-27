@@ -41,6 +41,10 @@ This binds botfront to the npm node-modules </br>
 Docker containers will download then start botfront
 Open a browser and navigate to localhost:8888 </br>
 
+For running custom docker-compose.yml files
+```docker-compose up```
+
+
 ##Linux 🐧 </br>
 ```sudo apt-get install docker-ce```</br>
 ```sudo apt install nodejs npm```</br>

@@ -56,14 +56,6 @@ services:
       - actions
     env_file:
       - .env
-  duckling:
-    image: 'botfront/duckling:latest'
-    container_name: botfront-duckling
-    networks:
-      - botfront-network
-    restart: always
-    ports:
-      - '8000:8000'
   mongo:
     image: 'mongo:latest'
     container_name: botfront-mongo
@@ -76,6 +68,15 @@ services:
       - '27017:27017'
     env_file:
       - .env
+  openbullet2:
+    image: openbullet/openbullet2
+    container_name: openbullet2
+    networks: ["botfront-network"]
+    restart: always
+    ports:
+    - "8069:5000"
+    volumes:
+    - "./modules/Exploit/OpenBullet2/UserData/:/app/UserData/"
 networks:
   botfront-network: {}
 volumes:

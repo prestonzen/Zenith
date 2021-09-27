@@ -56,14 +56,28 @@ services:
     env_file:
       - .env
 
-  duckling:
-    image: botfront/duckling
-    container_name: botfront-duckling
-    networks: ["botfront-network"]
-    restart: always
-    ports:
-      - "8000:8000"
+#  duckling:
+#    image: botfront/duckling
+#    container_name: botfront-duckling
+#    networks: ["botfront-network"]
+#    restart: always
+#    ports:
+#      - "8000:8000"
 
+#docker run --name openbullet2 --rm -p 8069:5000 -v C:/OB2/UserData/:/app/UserData/ -it openbullet/openbullet2:latest
+#docker run --name openbullet2 --rm -p 8069:5000 -v C:/Users/prest/Desktop/Zenith/modules/Exploit/OpenBullet2/UserData/:/app/UserData/ -it openbullet/openbullet2:latest
+
+#  openbullet2:
+#    image: openbullet2
+#    container_name: openbullet2
+#    networks: ["botfront-network"]
+#    restart: always
+#    ports:
+#      - "8069:5000"
+#    volumes:
+#      - "./modules/Exploit/OpenBullet2/UserData/:/app/UserData/"
+      
+      
   mongo:
     image: mongo
     container_name: botfront-mongo

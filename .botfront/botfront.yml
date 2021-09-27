@@ -2,15 +2,17 @@ images:
   default:
     botfront: 'botfront/botfront:v1.0.5'
     rasa: 'botfront/rasa-for-botfront:v2.3.3-bf.3'
-    duckling: 'botfront/duckling:latest'
+#    duckling: 'botfront/duckling:latest'
     mongo: 'mongo:latest'
     actions: 'rasa/rasa-sdk:2.1.2'
+    openbullet: 'openbullet/openbullet2:latest'
   current:
     botfront: 'botfront/botfront:v1.0.5'
     rasa: 'botfront/rasa-for-botfront:v2.3.3-bf.3'
-    duckling: 'botfront/duckling:latest'
+#    duckling: 'botfront/duckling:latest'
     mongo: 'mongo:latest'
     actions: 'rasa/rasa-sdk:2.1.2'
+    openbullet: 'openbullet/openbullet2:latest'
 env:
   bf_project_id: chitchat-OvJWh0lX4
   bf_url: 'http://botfront:3000/graphql'
