@@ -7,7 +7,7 @@ version: '3.0'
 services:
   botfront:
     image: 'botfront/botfront:v1.0.5'
-    container_name: botfront-app
+    container_name: zenith-botfront
     restart: always
     networks:
       - botfront-network
@@ -26,7 +26,7 @@ services:
       context: ./rasa
       args:
         RASA_IMAGE: '${IMAGES_CURRENT_RASA}'
-    container_name: botfront-rasa
+    container_name: zenith-rasa
     networks:
       - botfront-network
     restart: always
@@ -41,7 +41,7 @@ services:
       context: ./actions
       args:
         RASA_SDK_IMAGE: '${IMAGES_CURRENT_ACTIONS}'
-    container_name: botfront-actions
+    container_name: zenith-actions
     networks:
       - botfront-network
     restart: always
@@ -58,7 +58,7 @@ services:
       - .env
   mongo:
     image: 'mongo:latest'
-    container_name: botfront-mongo
+    container_name: zenith-mongo
     restart: always
     networks:
       - botfront-network
@@ -70,7 +70,7 @@ services:
       - .env
   openbullet2:
     image: openbullet/openbullet2
-    container_name: openbullet2
+    container_name: zenith-openbullet2
     networks: ["botfront-network"]
     restart: always
     ports:

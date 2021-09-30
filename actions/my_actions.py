@@ -9,11 +9,13 @@ from rasa_sdk import Action, Tracker
 from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
 
-##For Upcoming Voice Support Feature
-#import speech_recognition as sr
-#import subprocess
-#from gtts import gTTS
-#from translate import Translator
+"""
+#For Upcoming Voice Support Feature
+import speech_recognition as sr
+import subprocess
+from gtts import gTTS
+from translate import Translator
+"""
 
 """
 class ActionMyAction(Action):
@@ -31,7 +33,8 @@ class ActionMyAction(Action):
         return []
 """
 
-### Sets ###
+
+# Slot Setting
 
 class ActionSetIP(Action):
 
@@ -43,12 +46,12 @@ class ActionSetIP(Action):
             dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        ip_address = tracker.latest_message['text']  # Collect IP Address
+        # ip_address = next(tracker.get_latest_entity_values(“IP_Address”), None)
+        dispatcher.utter_message(text=f"I've saved the IP Address: {ip_address}")  # utter to confirm
 
-        ip_address = tracker.latest_message['text']#Collect IP Address
-        #ip_address = next(tracker.get_latest_entity_values(“IP_Address”), None)
-        dispatcher.utter_message(text=f"I've saved the IP Address: {ip_address}") #utter to confirm
+        return [SlotSet("slot_ip_address", ip_address)]  # First is the Slot, Second is the Python Variable
 
-        return [SlotSet("slot_ip_address", ip_address)] #First is the Slot, Second is the Python Variable
 
 class ActionSetEmail(Action):
 
@@ -62,16 +65,17 @@ class ActionSetEmail(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         email = tracker.latest_message['text']
-        #email = tracker.latest_message['entities']
-        #email = next(tracker.get_latest_entity_values(“Email”), None)
+        # email = tracker.latest_message['entities']
+        # email = next(tracker.get_latest_entity_values(“Email”), None)
 
         if not email:
             dispatcher.utter_message(text="I don't have an email saved.")
         else:
-            #ip_address = Filter ip_address input for code injection
-            #As long as I don't bind mount local files into docker then code injection is relatively isolated
+            # ip_address = Filter ip_address input for code injection
+            # As long as I don't bind mount local files into docker then code injection is relatively isolated
             dispatcher.utter_message(text=f"Alright I've got the email: {email}")
-        return [SlotSet("slot_email", email)] #Correct. First section is Slot. Second is Python Variable
+        return [SlotSet("slot_email", email)]  # Correct. First section is Slot. Second is Python Variable
+
 
 class ActionSetDomain(Action):
 
@@ -83,11 +87,11 @@ class ActionSetDomain(Action):
             dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        domain = tracker.latest_message['text']  # Collect data from user input
+        dispatcher.utter_message(text=f"I've saved the domain: {domain}")  # utter to confirm
 
-        domain = tracker.latest_message['text']#Collect data from user input
-        dispatcher.utter_message(text=f"I've saved the domain: {domain}") #utter to confirm
+        return [SlotSet("slot_domain", domain)]  # First is the Slot, Second is the Python Variable
 
-        return [SlotSet("slot_domain", domain)] #First is the Slot, Second is the Python Variable
 
 class ActionSetUsername(Action):
 
@@ -99,14 +103,14 @@ class ActionSetUsername(Action):
             dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
         username = tracker.latest_message['text']
         dispatcher.utter_message(text=f"I'll remember the username {username}.")
         return [SlotSet("slot_username", username)]
 
-### General ###
 
-class ActionTellTime(Action): #WORKS
+### General Functions ###
+
+class ActionTellTime(Action):  # WORKS
 
     def name(self) -> Text:
         return "action_tell_time"
@@ -116,12 +120,12 @@ class ActionTellTime(Action): #WORKS
             dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
         dispatcher.utter_message(text=f"The current date and time is {dt.datetime.now()}")
 
         return []
 
-class ActionTellJoke(Action): #WORKS
+
+class ActionTellJoke(Action):  # WORKS
 
     def name(self) -> Text:
         return "action_tell_joke"
@@ -131,20 +135,20 @@ class ActionTellJoke(Action): #WORKS
             dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
         url = "https://jokes10.p.rapidapi.com/random"
         headers = {
             'x-rapidapi-host': "jokes10.p.rapidapi.com",
             'x-rapidapi-key': ""
         }
 
-        jokeResponse = requests.request("GET", url, headers=headers)
+        jokeresponse = requests.request("GET", url, headers=headers)
 
-        #print(jokeResponse.text)
-        #clean jokeResponse
-        dispatcher.utter_message(jokeResponse.text)
+        # print(jokeResponse.text)
+        # clean jokeResponse
+        dispatcher.utter_message(jokeresponse.text)
 
         return []
+
 
 ### Checks ###
 
@@ -160,7 +164,7 @@ class ActionLeakDBCheck(Action):
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
 
         email = tracker.get_slot("slot_email")
-        #email = tracker.latest_message["email"]
+        # email = tracker.latest_message["email"]
         if not email:
             dispatcher.utter_message(text="I don't have an email to check.")
         else:
@@ -193,8 +197,8 @@ class ActionLeakDBCheck(Action):
                         text += "-" * 20 + '\n'
                         all_data.append(text)
                     result_length = len(all_data)
-                    dispatcher.utter_message(text="I found something.") #utters a message in Zenith
-                    for each in all_data[:3]: #remove [:3] to check data before creating a pastebin
+                    dispatcher.utter_message(text="I found something.")  # utters a message in Zenith
+                    for each in all_data[:3]:  # remove [:3] to check data before creating a pastebin
                         dispatcher.utter_message(each.strip())
                     if result_length > 3:
                         text = ""
@@ -207,13 +211,15 @@ class ActionLeakDBCheck(Action):
                                 'api_paste_expire_date': '10M'  # this will make the pastebin link temporary
                                 }
                         pastebin = requests.post("https://pastebin.com/api/api_post.php", data=data)
-                        dispatcher.utter_message(text=f"You get the picture so rather than me listing all {result_length} of them here's a link with them all" + pastebin.text)
+                        dispatcher.utter_message(
+                            text=f"You get the picture so rather than me listing all {result_length} of them here's a link with them all" + pastebin.text)
                 else:
                     dispatcher.utter_message(text="I didn't find anything useful.")
             else:
                 dispatcher.utter_message(text="I didn't find anything useful.")
 
         return []
+
 
 class ActionShodanCheck(Action):
 
@@ -225,14 +231,16 @@ class ActionShodanCheck(Action):
             dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-    
+
         ip_address = tracker.get_slot("slot_ip_address")
         if not ip_address:
             dispatcher.utter_message(text="I don't have an IP Address to check.")
         else:
-            #ip_address = Filter ip_address input for code injection
-            dispatcher.utter_message(text=f"Here's a Shodan search link for that IP Address: https://www.shodan.io/search?query={ip_address}")
+            # ip_address = Filter ip_address input for code injection
+            dispatcher.utter_message(
+                text=f"Here's a Shodan search link for that IP Address: https://www.shodan.io/search?query={ip_address}")
         return []
+
 
 class ActionUsernameCheck(Action):
 
@@ -244,10 +252,9 @@ class ActionUsernameCheck(Action):
             dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-
         uname = tracker.get_slot('slot_username')
-        #name = Filter ip_address input for code injection
-        #name = name.replace(" ", "+")
+        # name = Filter ip_address input for code injection
+        # name = name.replace(" ", "+")
         dispatcher.utter_message(text="Here's are some username search links.")
         dispatcher.utter_message(text="You'll need to type that username into this site: https://checkusernames.com")
         dispatcher.utter_message(text=f"https://knowem.com/checkusernames.php?u={uname}")
