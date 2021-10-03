@@ -55,17 +55,25 @@ Currently Untested </br>
 
 ##Actions Enviornment Prep </br>
 
-Create an andaconda enviornment with: </br>
+Dependencies: </br>
 requests
 SpeechRecognition
 PyAudio
 pandas
 beautifulsoup4
+scipy == 1.4.1
+Numpy == 1.16.0
 
 ##Planned Features </br>
 Social Engineering Module Expansion for Computer Vision Micro Expression Analysis: https://github.com/JostineHo/mememoji </br>
 Voice Functionality to Talk to and receive voice responses from Zénith using Rasa's voice module: https://github.com/RasaHQ/rasa-voice-interface | https://www.youtube.com/watch?v=vX7IkUHU8m4&list=PLtFHvora00y-LU27sZGzzpHSNSpR1pUCW </br>
 
+
+#Features
+##Open Bullet 2
+##Social Fish
+Username: root
+Password: zenith
 #Donate 💸 </br>
 I haven't completely decided on a monetization structure yet so to delay that my donation links are below: </br>
 BTC: ```bc1qlnvj4r90ga5ntw0j7mvjtdt2uwa8hcyz5flvny``` </br>

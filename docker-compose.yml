@@ -7,6 +7,7 @@ version: '3.0'
 services:
   botfront:
     image: 'botfront/botfront:v1.0.5'
+    #build from local dockerfile to fix the favicon andd title page
     container_name: zenith-botfront
     restart: always
     networks:
@@ -77,6 +78,13 @@ services:
     - "8069:5000"
     volumes:
     - "./modules/Exploit/OpenBullet2/UserData/:/app/UserData/"
+  socialfish:
+    image: 'prestonzen/socialfish:1.0'
+    container_name: zenith-socialfish
+    networks: ["botfront-network"]
+    restart: always
+    ports:
+    - "5001:5000"
 networks:
   botfront-network: {}
 volumes:

@@ -8,6 +8,7 @@ from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker
 from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
+import time
 
 """
 #For Upcoming Voice Support Feature
@@ -18,10 +19,10 @@ from translate import Translator
 """
 
 """
-class ActionMyAction(Action):
+class ActionExampleAction(Action):
 
     def name(self) -> Text:
-        return "action_my_action"
+        return "action_my_action" #lower case
 
     def run(
             self, 
@@ -34,7 +35,7 @@ class ActionMyAction(Action):
 """
 
 
-# Slot Setting
+# Slot Set Actions
 
 class ActionSetIP(Action):
 
@@ -51,7 +52,6 @@ class ActionSetIP(Action):
         dispatcher.utter_message(text=f"I've saved the IP Address: {ip_address}")  # utter to confirm
 
         return [SlotSet("slot_ip_address", ip_address)]  # First is the Slot, Second is the Python Variable
-
 
 class ActionSetEmail(Action):
 
@@ -76,7 +76,6 @@ class ActionSetEmail(Action):
             dispatcher.utter_message(text=f"Alright I've got the email: {email}")
         return [SlotSet("slot_email", email)]  # Correct. First section is Slot. Second is Python Variable
 
-
 class ActionSetDomain(Action):
 
     def name(self) -> Text:
@@ -92,7 +91,6 @@ class ActionSetDomain(Action):
 
         return [SlotSet("slot_domain", domain)]  # First is the Slot, Second is the Python Variable
 
-
 class ActionSetUsername(Action):
 
     def name(self) -> Text:
@@ -107,6 +105,21 @@ class ActionSetUsername(Action):
         dispatcher.utter_message(text=f"I'll remember the username {username}.")
         return [SlotSet("slot_username", username)]
 
+class ActionSetCVE(Action):
+
+    def name(self) -> Text:
+        return "action_set_cve"
+
+    def run(
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+        cve = tracker.latest_message['text']  # Collect CVE
+        # ip_address = next(tracker.get_latest_entity_values(“IP_Address”), None)
+        dispatcher.utter_message(text=f"I've saved the CVE: {cve}")  # utter to confirm
+
+        return [SlotSet("slot_cve", cve)]  # First is the Slot, Second is the Python Variable
 
 ### General Functions ###
 
@@ -123,7 +136,6 @@ class ActionTellTime(Action):  # WORKS
         dispatcher.utter_message(text=f"The current date and time is {dt.datetime.now()}")
 
         return []
-
 
 class ActionTellJoke(Action):  # WORKS
 
@@ -142,13 +154,11 @@ class ActionTellJoke(Action):  # WORKS
         }
 
         jokeresponse = requests.request("GET", url, headers=headers)
-
-        # print(jokeResponse.text)
-        # clean jokeResponse
-        dispatcher.utter_message(jokeresponse.text)
-
+        jokeJSON = (jokeResponse.json())  # Stores a variable named jokeJSON with the value of the request response formatted as a JSON
+        dispatcher.utter_message(jokeJSON[0]["joke_text"])  # prints the jokeJSON variable's 1st dictionary (Zero indexed) then looks for the key "joke_text"
+        time.sleep(3)
+        dispatcher.utter_message(jokeJSON[0]["joke_punchline"])  # prints the jokeJSON variable's 1st dictionary (Zero indexed) then looks for the key "joke_punchline"
         return []
-
 
 ### Checks ###
 
@@ -220,7 +230,6 @@ class ActionLeakDBCheck(Action):
 
         return []
 
-
 class ActionShodanCheck(Action):
 
     def name(self) -> Text:
@@ -241,7 +250,6 @@ class ActionShodanCheck(Action):
                 text=f"Here's a Shodan search link for that IP Address: https://www.shodan.io/search?query={ip_address}")
         return []
 
-
 class ActionUsernameCheck(Action):
 
     def name(self) -> Text:
@@ -260,6 +268,26 @@ class ActionUsernameCheck(Action):
         dispatcher.utter_message(text=f"https://knowem.com/checkusernames.php?u={uname}")
         dispatcher.utter_message(text="You'll need to manually type into this one as well: https://namechk.com/")
 
+        return []
+
+class ActionSearchCVE(Action):
+
+    def name(self) -> Text:
+        return "action_search_cve"
+
+    def run(
+            self,
+            dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+
+        cve = tracker.get_slot("slot_cve")
+        if not cve:
+            dispatcher.utter_message(text="I don't have a CVE to check.")
+        else:
+            # ip_address = Filter ip_address input for code injection
+            dispatcher.utter_message(
+                text=f"Here's a OpenCVE search link: https://www.opencve.io/cve?cvss=&search={cve}")
         return []
 
 
